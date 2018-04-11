@@ -1,0 +1,10 @@
+version: "3"
+services:
+  integration:
+    build: .
+    volumes:
+      - .:/app
+    working_dir: /app
+    cap_add:
+      - SYS_ADMIN
+    shm_size: 1024M
