@@ -1,6 +1,7 @@
-FROM python:latest
+FROM python:3.7.5
 
-RUN apt-get update -yqq && apt-get install apt-transport-https zip -yqq &&  apt-get upgrade -yqq
+# apt-get installs
+RUN apt-get update -yqq && apt-get install apt-transport-https zip -yqq &&  apt-get upgrade -yqq 
 
 # Install Chrome WebDriver
 RUN CHROMEDRIVER_VERSION=`curl -sS http://chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
@@ -24,6 +25,6 @@ RUN useradd jenkins --shell /bin/bash --create-home \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'jenkins:nopassword' | chpasswd
 
-RUN mkdir /data && chown -R jenkins:jenkins /data
+RUN mkdir /data && chown -R jenkins:jenkins /data && apt-get clean
 
 USER jenkins
