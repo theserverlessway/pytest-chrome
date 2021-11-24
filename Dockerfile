@@ -5,11 +5,18 @@ RUN apt-get update -yqq && apt-get install apt-transport-https zip -yqq &&  apt-
 
 # Install Chrome WebDriver
 RUN CHROME_DRIVER_VERSION=`curl -sS http://chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
+    echo Creating dir: /opt/chromedriver-$CHROME_DRIVER_VERSION && \
     mkdir -p /opt/chromedriver-$CHROME_DRIVER_VERSION && \
+    echo Getting chromedriver linux executable from: http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip && \
+    echo to: /tmp/chromedriver_linux64.zip && \
     curl -sS -o /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip && \
+    echo Unzipping: /tmp/chromedriver_linux64.zip to: /opt/chromedriver-$CHROME_DRIVER_VERSION && \
     unzip -qq /tmp/chromedriver_linux64.zip -d /opt/chromedriver-$CHROME_DRIVER_VERSION && \
+    echo Removing unnecessary zip file: /tmp/chromedriver_linux64.zip && \
     rm /tmp/chromedriver_linux64.zip && \
+    echo Adding permissions to: 'chromedriver' at: /opt/chromedriver-$CHROME_DRIVER_VERSION/chromedriver && \
     chmod +x /opt/chromedriver-$CHROME_DRIVER_VERSION/chromedriver && \
+    echo Creating link from: /opt/chromedriver-$CHROME_DRIVER_VERSION/chromedriver to: /usr/local/bin/chromedriver && \
     ln -fs /opt/chromedriver-$CHROME_DRIVER_VERSION/chromedriver /usr/local/bin/chromedriver
 
 # Install Google Chrome
