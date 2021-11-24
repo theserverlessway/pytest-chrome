@@ -20,11 +20,13 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
+# Add jenkins user
 RUN useradd jenkins --shell /bin/bash --create-home \
   && usermod -a -G sudo jenkins \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'jenkins:nopassword' | chpasswd
 
+# chown & apt-get clean
 RUN mkdir /data && chown -R jenkins:jenkins /data && apt-get clean
 
 USER jenkins
