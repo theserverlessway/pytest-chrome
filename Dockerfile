@@ -19,8 +19,6 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-RUN pip install selenium pytest-selenium pytest pytest-base-url
-
 RUN useradd headless --shell /bin/bash --create-home \
   && usermod -a -G sudo headless \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
